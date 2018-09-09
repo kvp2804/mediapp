@@ -20,8 +20,14 @@ app.use(bodyParser.urlencoded({extended: true }));
 app.use(bodyParser.json());
 app.use(morgan('dev'));
 
-var api = require('./app/routes/api')(app, express);
-app.use('/api', api);
+var apiPatients = require('./app/routes/apiPatients')(app, express);
+app.use('/api', apiPatients);
+
+var apiExpense = require('./app/routes/apiExpense')(app, express);
+app.use('/api', apiExpense);
+
+var apiIncome = require('./app/routes/apiIncome')(app, express);
+app.use('/api', apiIncome);
 
 app.listen(config.port, function(err){
 	if(err) {
@@ -29,9 +35,7 @@ app.listen(config.port, function(err){
 	} else {
 
 		console.log("Listening on port " + config.port );
-
 	}
-
 });
 
 

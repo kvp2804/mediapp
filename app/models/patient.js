@@ -9,7 +9,9 @@ var patientSchema = new schema({
 	patientLastName: String,
 	address: String,
 	contactPerson: String,
-	contactPersonNumber: String
+	contactPersonNumber: String,
+	dateOfEntry: { type: Date, default: Date.now },
+	dateOfBirth: Date
 	
 });
 
