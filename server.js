@@ -3,6 +3,7 @@ var bodyParser = require('body-parser');
 var morgan = require('morgan');
 var config = require('./config');
 const mongoose = require('mongoose');
+var path = require('path');
 
 var app = express();
 
@@ -38,8 +39,8 @@ app.listen(config.port, function(err){
 	}
 });
 
-
+app.use(express.static(path.join(__dirname, 'public')));
 //Get requests
-app.get('*', function(req, res){
-	res.sendFile(__dirname + '/public/views/index.html');
-});
+//app.get('*', function(req, res){
+//	res.sendFile(__dirname + '/	');
+//});
