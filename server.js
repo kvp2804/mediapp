@@ -1,11 +1,19 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
+var cors = require('cors');
 var config = require('./config');
 const mongoose = require('mongoose');
 var path = require('path');
 
 var app = express();
+
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
 //Connect to the database
 mongoose.connect(config.database, function(err){

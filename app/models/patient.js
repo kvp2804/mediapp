@@ -4,6 +4,7 @@ var schema = mongoose.Schema;
 
 var patientSchema = new schema({	
 	
+	addmissionNo: Number,
 	patientFirstName: String,
 	patientMiddleName: String,
 	patientLastName: String,
@@ -11,8 +12,11 @@ var patientSchema = new schema({
 	contactPerson: String,
 	contactPersonNumber: String,
 	dateOfEntry: { type: Date, default: Date.now },
-	dateOfBirth: Date
-	
-});
+	dateOfBirth: Date,	
+	patientAddmissionStatus: [{
+			status: { type: String, default: 'Admitted' },
+			dateOfStatusChange: Date
+		}]	
+	});
 
 module.exports = mongoose.model('patient', patientSchema );

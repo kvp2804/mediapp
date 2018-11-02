@@ -10,7 +10,7 @@ module.exports = function( app, express ){
 
 		var newExpense = new income({
 			
-			incomeFor: req.body.id,
+			incomeFor: req.body.incomeFor,
 			incomeDate: req.body.incomeDate,
 			description: req.body.description,
 			incomeCategory: req.body.incomeCategory,
@@ -30,18 +30,20 @@ module.exports = function( app, express ){
 
 	});
 
-	apiIncome.get('/income', function(req, res){
+	apiIncome.get('/income', function(req, res){		
 
-		income.find({}, function(err, incomes){
+		income.find({}).
+			populate({path: 'incomeFor', select: ['patientFirstName', 'patientLastName']}).
+			 exec(	function(err, income){
 
-			if(err){
-				res.send(err);
-				return;
-			}
+					if(err){
+						res.send(err);
+						return;
+					}
 
-			res.json(incomes);
-
-		});
+					res.json(income);
+			 	});
+		
 	});
 
 
@@ -50,14 +52,17 @@ module.exports = function( app, express ){
 		income.findOne({			
 			_id: req.query.id
 
-		}).select('_id incomeFor incomeDate description incomeCategory amount').exec(function(err, specificincome){
+		}).
+		populate({path: 'incomeFor', select: ['patientFirstName', 'patientLastName']}).
+			select('_id incomeFor incomeDate description incomeCategory amount').
+				exec(function(err, specificincome){
 
-			if(err){
-				res.send(err);
-			}
+					if(err){
+						res.send(err);
+					}
 
-			res.json(specificincome);
-		});
+					res.json(specificincome);
+				});
 	});
 
 	apiIncome.get('/incomebydateforspecificpatient', function(req, res){
@@ -69,7 +74,9 @@ module.exports = function( app, express ){
 				$lte: req.query.endDate
 			}
 
-		}).select('_id incomeFor incomeDate description incomeCategory amount').exec(function(err, incomebydateforspecificpatient){
+		}).
+		populate({path: 'incomeFor', select: ['patientFirstName', 'patientLastName']}).
+			select('_id incomeFor incomeDate description incomeCategory amount').exec(function(err, incomebydateforspecificpatient){
 
 			if(err){
 				res.send(err);
@@ -87,7 +94,9 @@ module.exports = function( app, express ){
 				$lte: req.query.endDate
 			}
 
-		}).select('_id incomeFor incomeDate description incomeCategory amount').exec(function(err, incomebydateforallpatient){
+		}).
+		populate({path: 'incomeFor', select: ['patientFirstName', 'patientLastName']}).
+			select('_id incomeFor incomeDate description incomeCategory amount').exec(function(err, incomebydateforallpatient){
 
 			if(err){
 				res.send(err);
@@ -100,9 +109,10 @@ module.exports = function( app, express ){
 	apiIncome.get('/incomeforspecificpatient', function(req, res){
 
 		income.find({			
-			incomeFor: req.query.id
-
-		}).select('_id incomeFor incomeDate description incomeCategory amount').exec(function(err, forspecificpatient){
+			incomeFor: req.query.incomeFor
+		}).
+		populate({path: 'incomeFor', select: ['patientFirstName', 'patientLastName']}).
+		    select('_id incomeFor incomeDate description incomeCategory amount').exec(function(err, forspecificpatient){
 
 			if(err){
 				res.send(err);
@@ -110,6 +120,46 @@ module.exports = function( app, express ){
 
 			res.json(forspecificpatient);
 		});
+	});
+
+	apiIncome.put('/incomeupdate', function(req, res){
+		console.log( "This is the query id for income update : " + req.query.id );
+		var query = { _id : req.query.id };
+		var newIncome = new income({			 
+			description: req.body.description,
+			incomeCategory: req.body.incomeCategory,
+			amount: req.body.amount
+		});
+		income.findOneAndUpdate(query, {			 
+			description: req.body.description,
+			incomeCategory: req.body.incomeCategory,
+			amount: req.body.amount
+		}, function(err, updatedIncome){
+
+			if (err) return res.status(500).send(err);
+			    // We'll create a simple object to send back with a message and the id of the document that was removed
+			    // You can really do this however you want, though.
+			    const response = {
+			        message: "Updated Income successfully"
+			    };
+			    return res.status(200).send(response);
+			});
+	});
+
+	apiIncome.delete('/incomedelete', function(req, res){
+
+		console.log( "This is the query id for income delete : " + req.query.id );
+
+		income.findByIdAndRemove(req.query.id, function(err, deletedIncome){
+
+			if (err) return res.status(500).send(err);
+			    // We'll create a simple object to send back with a message and the id of the document that was removed
+			    // You can really do this however you want, though.
+			    const response = {
+			        message: "Income entry successfully deleted"
+			    };
+			    return res.status(200).send(response);
+			});
 	});
 
 

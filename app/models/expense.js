@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-//var patient = require('./patient');
+var patient = require('./patient');
 
 var schema = mongoose.Schema;
 
