@@ -3,6 +3,7 @@ var mongoose = require('mongoose');
 
 var schema = mongoose.Schema;
 
+
 var incomeSchema = new schema({	
 	
 	incomeFor: {type: mongoose.Schema.Types.ObjectId, ref: 'patient'},

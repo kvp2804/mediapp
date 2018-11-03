@@ -1,7 +1,6 @@
 var expense = require('../models/expense');
 var config = require('../../config');
 
-
 module.exports = function( app, express ){
 
 	var apiExpense = express.Router();

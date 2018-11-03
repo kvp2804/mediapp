@@ -1,7 +1,6 @@
 	var patient = require('../models/patient');
 var config = require('../../config');
 
-
 module.exports = function( app, express ){
 
 	var apiPatients = express.Router();

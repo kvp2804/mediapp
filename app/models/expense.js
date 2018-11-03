@@ -3,6 +3,7 @@ var patient = require('./patient');
 
 var schema = mongoose.Schema;
 
+
 var expenseSchema = new schema({	
 	
 	expenseFor: {type: mongoose.Schema.Types.ObjectId, ref: 'patient'},

@@ -1,7 +1,6 @@
 var income = require('../models/income');
 var config = require('../../config');
 
-
 module.exports = function( app, express ){
 
 	var apiIncome = express.Router();
