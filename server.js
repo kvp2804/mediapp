@@ -8,6 +8,7 @@ var path = require('path');
 
 var app = express();
 
+
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
@@ -37,6 +38,7 @@ app.use('/api', apiExpense);
 
 var apiIncome = require('./app/routes/apiIncome')(app, express);
 app.use('/api', apiIncome);
+
 
 app.listen(config.port, function(err){
 	if(err) {

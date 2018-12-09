@@ -40,6 +40,8 @@ module.exports = function( app, express ){
 						return;
 					}
 
+					console.log( income );
+
 					res.json(income);
 			 	});
 		

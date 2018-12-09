@@ -1,4 +1,4 @@
-	var patient = require('../models/patient');
+var patient = require('../models/patient');
 var config = require('../../config');
 
 module.exports = function( app, express ){
@@ -7,8 +7,8 @@ module.exports = function( app, express ){
 
 	apiPatients.post('/patient', function(req, res){
 
-		console.log(req.body.status);
-		console.log(req.body.dateOfStatusChange);
+		console.log(req.body.patientAddmissionStatus.status);
+		console.log(req.body.patientAddmissionStatus.dateOfStatusChange);
 		var newpatient = new patient({
 			
 			addmissionNo: req.body.addmissionNo,			
@@ -21,8 +21,8 @@ module.exports = function( app, express ){
 			dateOfEntry: new Date(Date.now()),
 			dateOfBirth: req.body.dateOfBirth,
 			patientAddmissionStatus: [{
-					status: req.body.status,
-					dateOfStatusChange: req.body.dateOfStatusChange 
+					status: req.body.patientAddmissionStatus[0].status,
+					dateOfStatusChange: req.body.patientAddmissionStatus[0].dateOfStatusChange 
 				}]
 		})
 
@@ -88,10 +88,16 @@ module.exports = function( app, express ){
 			if (err) return res.status(500).send(err);
 			    // We'll create a simple object to send back with a message and the id of the document that was removed
 			    // You can really do this however you want, though.
-			    updatedPatient.patientAddmissionStatus.push({
-					status: req.body.status,
-					dateOfStatusChange: req.body.dateOfStatusChange 
+			    console.log("Before check" + req.body.patientAddmissionStatus);
+			    if( req.body.patientAddmissionStatus != null )
+			    {
+			    	console.log("Inside the if");
+			    	updatedPatient.patientAddmissionStatus.push({
+						status: req.body.patientAddmissionStatus[0].status,
+						dateOfStatusChange: req.body.patientAddmissionStatus[0].dateOfStatusChange 
 				});
+			    }
+			    
 				updatedPatient.save();
 
 			    const response = {
