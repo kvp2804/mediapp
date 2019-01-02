@@ -11,6 +11,7 @@ var expenseSchema = new schema({
 	expenseDate: Date,
 	description: String,
 	expenseCategory: String,
+	expenseSource: { type: String, default: 'PetiCash' },
 	amount: Number
 });
 

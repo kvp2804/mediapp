@@ -13,6 +13,7 @@ module.exports = function( app, express ){
 			expenseDate: req.body.expenseDate,
 			description: req.body.description,
 			expenseCategory: req.body.expenseCategory,
+			expenseSource: req.body.expenseSource,
 			amount: req.body.amount
 		})
 
@@ -54,7 +55,7 @@ module.exports = function( app, express ){
 
 		}).
 		populate({path: 'expenseFor', select: ['patientFirstName', 'patientLastName']}).
-			select('_id expenseFor expenseDate description expenseCategory amount').exec(function(err, specificexpense){
+			select('_id expenseFor expenseDate description expenseCategory expenseSource amount').exec(function(err, specificexpense){
 
 			if(err){
 				res.send(err);
@@ -75,7 +76,7 @@ module.exports = function( app, express ){
 
 		}).
 		populate({path: 'expenseFor', select: ['patientFirstName', 'patientLastName']}).
-			select('_id expenseFor expenseDate description expenseCategory amount').exec(function(err, expensebydateforspecificpatient){
+			select('_id expenseFor expenseDate description expenseCategory expenseSource amount').exec(function(err, expensebydateforspecificpatient){
 
 			if(err){
 				res.send(err);
@@ -95,7 +96,7 @@ module.exports = function( app, express ){
 
 		}).
 		populate({path: 'expenseFor', select: ['patientFirstName', 'patientLastName']}).
-			select('_id expenseFor expenseDate description expenseCategory amount').exec(function(err, expensebydateforallpatient){
+			select('_id expenseFor expenseDate description expenseCategory expenseSource amount').exec(function(err, expensebydateforallpatient){
 
 			if(err){
 				res.send(err);
@@ -112,7 +113,7 @@ module.exports = function( app, express ){
 
 		}).
 		populate({path: 'expenseFor', select: ['patientFirstName', 'patientLastName']}).
-		    select('_id expenseFor expenseDate description expenseCategory amount').exec(function(err, forspecificpatient){
+		    select('_id expenseFor expenseDate description expenseCategory expenseSource amount').exec(function(err, forspecificpatient){
 
 			if(err){
 				res.send(err);
@@ -145,11 +146,13 @@ module.exports = function( app, express ){
 		var newExpense = new expense({			 
 			description: req.body.description,
 			expenseCategory: req.body.expenseCategory,
+			expenseSource: req.body.expenseSource,
 			amount: req.body.amount
 		});
 		expense.findOneAndUpdate(query, {			 
 			description: req.body.description,
 			expenseCategory: req.body.expenseCategory,
+			expenseSource: req.body.expenseSource,
 			amount: req.body.amount
 		}, function(err, updatedExpense){
 
