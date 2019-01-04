@@ -34,7 +34,7 @@ module.exports = function( app, express ){
 		console.log('In apiExpense');
 
 		expense.find({}).
-			populate({path: 'expenseFor', select: ['patientFirstName', 'patientLastName']}).
+			populate({path: 'expenseFor', select: ['addmissionNo', 'patientFirstName', 'patientLastName']}).
 				exec(function(err, expenses){
 
 					if(err){
@@ -54,7 +54,7 @@ module.exports = function( app, express ){
 			_id: req.query.id
 
 		}).
-		populate({path: 'expenseFor', select: ['patientFirstName', 'patientLastName']}).
+		populate({path: 'expenseFor', select: ['addmissionNo', 'patientFirstName', 'patientLastName']}).
 			select('_id expenseFor expenseDate description expenseCategory expenseSource amount').exec(function(err, specificexpense){
 
 			if(err){
@@ -75,7 +75,7 @@ module.exports = function( app, express ){
 			}
 
 		}).
-		populate({path: 'expenseFor', select: ['patientFirstName', 'patientLastName']}).
+		populate({path: 'expenseFor', select: ['addmissionNo', 'patientFirstName', 'patientLastName']}).
 			select('_id expenseFor expenseDate description expenseCategory expenseSource amount').exec(function(err, expensebydateforspecificpatient){
 
 			if(err){
@@ -95,7 +95,7 @@ module.exports = function( app, express ){
 			}
 
 		}).
-		populate({path: 'expenseFor', select: ['patientFirstName', 'patientLastName']}).
+		populate({path: 'expenseFor', select: ['addmissionNo', 'patientFirstName', 'patientLastName']}).
 			select('_id expenseFor expenseDate description expenseCategory expenseSource amount').exec(function(err, expensebydateforallpatient){
 
 			if(err){
@@ -112,7 +112,7 @@ module.exports = function( app, express ){
 			expenseFor: req.query.expenseFor
 
 		}).
-		populate({path: 'expenseFor', select: ['patientFirstName', 'patientLastName']}).
+		populate({path: 'expenseFor', select: ['addmissionNo', 'patientFirstName', 'patientLastName']}).
 		    select('_id expenseFor expenseDate description expenseCategory expenseSource amount').exec(function(err, forspecificpatient){
 
 			if(err){

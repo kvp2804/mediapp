@@ -32,7 +32,7 @@ module.exports = function( app, express ){
 	apiIncome.get('/income', function(req, res){		
 
 		income.find({}).
-			populate({path: 'incomeFor', select: ['patientFirstName', 'patientLastName']}).
+			populate({path: 'incomeFor', select: ['addmissionNo', 'patientFirstName', 'patientLastName']}).
 			 exec(	function(err, income){
 
 					if(err){
@@ -54,7 +54,7 @@ module.exports = function( app, express ){
 			_id: req.query.id
 
 		}).
-		populate({path: 'incomeFor', select: ['patientFirstName', 'patientLastName']}).
+		populate({path: 'incomeFor', select: ['addmissionNo', 'patientFirstName', 'patientLastName']}).
 			select('_id incomeFor incomeDate description incomeCategory amount').
 				exec(function(err, specificincome){
 
@@ -76,7 +76,7 @@ module.exports = function( app, express ){
 			}
 
 		}).
-		populate({path: 'incomeFor', select: ['patientFirstName', 'patientLastName']}).
+		populate({path: 'incomeFor', select: ['addmissionNo', 'patientFirstName', 'patientLastName']}).
 			select('_id incomeFor incomeDate description incomeCategory amount').exec(function(err, incomebydateforspecificpatient){
 
 			if(err){
@@ -96,7 +96,7 @@ module.exports = function( app, express ){
 			}
 
 		}).
-		populate({path: 'incomeFor', select: ['patientFirstName', 'patientLastName']}).
+		populate({path: 'incomeFor', select: ['addmissionNo', 'patientFirstName', 'patientLastName']}).
 			select('_id incomeFor incomeDate description incomeCategory amount').exec(function(err, incomebydateforallpatient){
 
 			if(err){
@@ -112,7 +112,7 @@ module.exports = function( app, express ){
 		income.find({			
 			incomeFor: req.query.incomeFor
 		}).
-		populate({path: 'incomeFor', select: ['patientFirstName', 'patientLastName']}).
+		populate({path: 'incomeFor', select: ['addmissionNo', 'patientFirstName', 'patientLastName']}).
 		    select('_id incomeFor incomeDate description incomeCategory amount').exec(function(err, forspecificpatient){
 
 			if(err){
