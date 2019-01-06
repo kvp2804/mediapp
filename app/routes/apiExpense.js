@@ -7,6 +7,8 @@ module.exports = function( app, express ){
 
 	apiExpense.post('/expense', function(req, res){
 
+		console.log('Input Date:' + req.body.expenseDate);
+
 		var newExpense = new expense({
 			
 			expenseFor: req.body.expenseFor,			
@@ -67,6 +69,8 @@ module.exports = function( app, express ){
 
 	apiExpense.get('/expensebydateforspecificpatient', function(req, res){
 
+		console.log( 'Start Date of query: ' + req.query.startDate )
+
 		expense.find({			
 			expenseFor: req.query.id,
 			expenseDate: {
@@ -87,6 +91,8 @@ module.exports = function( app, express ){
 	});
 
 	apiExpense.get('/expensebydateforallpatient', function(req, res){
+
+		console.log( 'Start Date of query: ' + req.query.startDate )
 
 		expense.find({						
 			expenseDate: {
